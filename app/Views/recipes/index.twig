@@ -1,0 +1,22 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+  <h2>Recettes</h2>
+
+  {% if recipes is empty %}
+    <p>Aucune recette pour le moment.</p>
+  {% else %}
+    <ul>
+      {% for r in recipes %}
+        <li>
+          <strong>#{{ r.id }}</strong> — {{ r.title }}
+          <span style="color:#666;">(publiée le {{ r.created_at }})</span>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <p style="margin-top:16px;">
+    <a href="{{ base }}/">⟵ Retour à l’accueil</a>
+  </p>
+{% endblock %}
