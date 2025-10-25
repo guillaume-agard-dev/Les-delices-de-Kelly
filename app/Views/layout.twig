@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>{{ title ?? app_name }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <link rel="stylesheet" href="{{ base }}/assets/app.css">
+</head>
+<body style="font-family: system-ui, sans-serif; max-width: 960px; margin: 32px auto; line-height:1.6;">
+  <header>
+    <h1 style="margin:0 0 8px 0;">
+      <a href="{{ base }}/" style="text-decoration:none; color:inherit;">{{ app_name }}</a>
+    </h1>
+    <nav style="display:flex; gap:12px;">
+      <a href="{{ base }}/">Accueil</a>
+      <a href="{{ base }}/recipes">Recettes</a>
+    </nav>
+    <hr>
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer><hr>© {{ "now"|date("Y") }} — Mentions légales</footer>
+</body>
+</html>
