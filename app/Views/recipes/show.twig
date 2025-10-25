@@ -1,0 +1,19 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+  {% if recipe %}
+    <article>
+      <h2>{{ recipe.title }}</h2>
+      <p style="color:#666;">Publiée le {{ recipe.created_at }}</p>
+      <div style="margin-top:12px;">{{ recipe.content|nl2br }}</div>
+
+      <p style="margin-top:16px;">
+        <a href="{{ base }}/recipes">⟵ Retour à la liste</a>
+      </p>
+    </article>
+  {% else %}
+    <h2>Recette introuvable</h2>
+    <p>La recette demandée n’existe pas ou a été supprimée.</p>
+    <p><a href="{{ base }}/recipes">⟵ Retour à la liste</a></p>
+  {% endif %}
+{% endblock %}

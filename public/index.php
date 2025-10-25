@@ -32,6 +32,8 @@ $router->setBase(rtrim(dirname($_SERVER['SCRIPT_NAME']), '/'));
 $router->get('/', [App\Controllers\HomeController::class, 'index']);
 // Route de Recipes -> contrôleur
 $router->get('/recipes', [App\Controllers\RecipeController::class, 'index']);
+// slug
+$router->get('/recipes/{slug}', [App\Controllers\RecipeController::class, 'show']);
 
 
 // Dispatch
