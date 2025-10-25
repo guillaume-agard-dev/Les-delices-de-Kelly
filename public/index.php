@@ -5,12 +5,24 @@ require dirname(__DIR__) . '/vendor/autoload.php';
 
 use App\Core\Router;
 use App\Core\View;
+use App\Core\DB;
 
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->safeLoad();
 
 // Initialiser Twig (répertoire des vues)
 View::init(__DIR__ . '/../app/Views');
+
+// ➜ INITIALISATION BDD (utilise .env)
+DB::init([
+    'dsn'  => sprintf(
+        'mysql:host=%s;dbname=%s;charset=utf8mb4',
+        $_ENV['DB_HOST'] ?? '127.0.0.1',
+        $_ENV['DB_NAME'] ?? 'recipes'
+    ),
+    'user' => $_ENV['DB_USER'] ?? 'root',
+    'pass' => $_ENV['DB_PASS'] ?? '',
+]);
 
 $router = new Router();
 // Détecter le chemin de base (/recipes-project/public)
