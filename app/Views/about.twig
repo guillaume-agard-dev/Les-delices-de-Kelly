@@ -1,0 +1,25 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+  <section class="about">
+    <div class="about__img">
+      <img
+        src="{{ base }}/uploads/about.jpg"
+        alt="Portrait — Les Délices de Kelly"
+        loading="lazy" decoding="async">
+    </div>
+
+    <div class="about__body">
+      <h2>À propos</h2>
+      <p>
+        Bienvenue sur <strong>Les Délices de Kelly</strong> — un espace pour partager
+        des recettes simples, gourmandes et de saison. Mon objectif : des pas-à-pas
+        clairs, des ingrédients accessibles, et des idées pour le quotidien comme pour
+        les grandes occasions.
+      </p>
+
+      {# Ajoute ici tes paragraphes réels, listes, etc. #}
+      {# <p> ... </p> #}
+    </div>
+  </section>
+{% endblock %}
