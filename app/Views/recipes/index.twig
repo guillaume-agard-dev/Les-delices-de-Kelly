@@ -9,12 +9,15 @@
     <ul>
       {% for r in recipes %}
         <li>
-          <strong>#{{ r.id }}</strong> — {{ r.title }}
+          <a href="{{ base }}/recipes/{{ r.slug }}">
+            <strong>#{{ r.id }}</strong> — {{ r.title }}
+          </a>
           <span style="color:#666;">(publiée le {{ r.created_at }})</span>
         </li>
       {% endfor %}
     </ul>
   {% endif %}
+
 
   <p style="margin-top:16px;">
     <a href="{{ base }}/">⟵ Retour à l’accueil</a>

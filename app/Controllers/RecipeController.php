@@ -9,7 +9,10 @@ final class RecipeController
     public function index(): void
     {
         $recipes = DB::query(
-            'SELECT id, title, created_at FROM recipes ORDER BY created_at DESC LIMIT 20'
+            'SELECT id, title, slug, created_at
+            FROM recipes
+            ORDER BY created_at DESC
+            LIMIT 20'
         )->fetchAll();
 
         View::render('recipes/index.twig', [
@@ -17,6 +20,7 @@ final class RecipeController
             'recipes' => $recipes,
         ]);
     }
+
 
     /** Affichage d'une recette par slug */
     public function show(string $slug): void
