@@ -27,6 +27,8 @@ DB::init([
 $router = new Router();
 // Détecter le chemin de base (/recipes-project/public)
 $router->setBase(rtrim(dirname($_SERVER['SCRIPT_NAME']), '/'));
+// Route 404
+$router->setNotFound([App\Controllers\ErrorController::class, 'notFound']);
 
 // Route d'accueil -> contrôleur
 $router->get('/', [App\Controllers\HomeController::class, 'index']);

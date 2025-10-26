@@ -1,0 +1,10 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+  <h2>Page introuvable (404)</h2>
+  <p>Désolé, la page demandée n’existe pas ou a été déplacée.</p>
+  <ul>
+    <li><a href="{{ base }}/">⟵ Retour à l’accueil</a></li>
+    <li><a href="{{ base }}/recipes">Voir les recettes</a></li>
+  </ul>
+{% endblock %}
