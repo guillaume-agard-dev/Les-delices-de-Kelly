@@ -36,6 +36,9 @@ $router->get('/', [App\Controllers\HomeController::class, 'index']);
 $router->get('/recipes', [App\Controllers\RecipeController::class, 'index']);
 // slug
 $router->get('/recipes/{slug}', [App\Controllers\RecipeController::class, 'show']);
+// About
+$router->get('/about', [App\Controllers\AboutController::class, 'index']);
+
 
 
 // Dispatch

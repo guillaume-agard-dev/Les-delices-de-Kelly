@@ -1,6 +1,8 @@
 {% extends "layout.twig" %}
 
 {% block content %}
+
+  {# Hero #}
   <section class="hero" style="background-image:url('{{ base }}/assets/hero.jpg');">
     <div class="hero__inner">
       <h2 class="hero__title">Les Délices de Kelly</h2>
@@ -9,9 +11,24 @@
     </div>
   </section>
 
+  {# About #}
+  <section class="about-intro">
+    <h3 style="margin:0 0 6px 0;">À propos</h3>
+    <p>
+      Bienvenue sur <strong>Les Délices de Kelly</strong> 👩🏼‍🍳 — un espace pour partager
+      des recettes simples, gourmandes et de saison. Mon objectif : des pas-à-pas
+      clairs, des ingrédients accessibles, et des idées pour le quotidien comme pour
+      les grandes occasions.
+    </p>
+    <p style="margin-top:10px;">
+      <a href="{{ base }}/about" class="btn btn-solid">En savoir plus</a>
+    </p>
+  </section>
+
+  {# Last recipes #}
   {% if featured %}
     <section style="margin-top:24px;">
-      <h3 style="margin:0 0 8px 0;">Dernière recette</h3>
+      <h3 style="margin:0 0 8px 0;">La recette du moment</h3>
 
       <article>
         <h2 style="margin:6px 0 8px 0;">
