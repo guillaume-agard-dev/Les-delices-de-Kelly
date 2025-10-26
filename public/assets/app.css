@@ -5,3 +5,15 @@ nav a { color: var(--fg); }
 hr { border: none; border-top: 1px solid #ddd; margin: 16px 0; }
 
 .recipe-thumb { display:block; }
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 12px;
+  border-radius: 999px;
+  background: #f0f0f0;
+  color: #222;
+  text-decoration: none;
+  border: 1px solid #e0e0e0;
+}
+.badge:hover { background: #e9e9e9; }
