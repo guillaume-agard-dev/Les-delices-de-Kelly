@@ -29,7 +29,7 @@ final class RecipeController
 
         $offset = ($page - 1) * $perPage;
 
-        $sql = "SELECT id, title, slug, created_at
+        $sql = "SELECT id, title, slug, image_path, created_at
                 FROM recipes
                 {$where}
                 ORDER BY created_at DESC
@@ -52,7 +52,7 @@ final class RecipeController
     public function show(string $slug): void
     {
         $recipe = DB::query(
-            'SELECT id, title, slug, content, created_at
+            'SELECT id, title, slug, content, image_path, created_at
              FROM recipes
              WHERE slug = :slug
              LIMIT 1',
