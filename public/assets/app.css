@@ -173,3 +173,71 @@ hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
   box-shadow: 0 3px 12px rgba(0,0,0,.04);
   border-left: 4px solid var(--brand);
 }
+
+
+/* Message flash login/register */
+.alert {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid;
+  margin: 12px 0;
+}
+.alert-ok {
+  background: #e9f9ef;   /* vert très clair */
+  border-color: #b6efc8; /* bord vert pâle */
+  color: #0b5137;        /* texte vert foncé */
+}
+.alert-err {
+  background: #fdecec;   /* rouge très clair */
+  border-color: #f5c2c7; /* bord rose/rouge pâle */
+  color: #842029;        /* texte rouge foncé */
+}
+
+
+/* Formulaire register/login */
+.form-auth { 
+  max-width: 520px; 
+  padding: 12px 0; 
+}
+
+.field { 
+  display: grid; 
+  gap: 6px; 
+  margin: 12px 0; 
+}
+.field label {
+  font-weight: 600;
+  font-family: "Libre Franklin", sans-serif;
+}
+
+.field input {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--fg);
+}
+
+.field input:focus {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+.field-error {
+  color: #842029;
+  font-size: 13px;
+}
+
+.actions {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.linklike {
+  background: none; border: none; padding: 0;
+  color: var(--brand); text-decoration: underline; cursor: pointer;
+  font: inherit;
+}
+.linklike:hover { color: var(--accent); }
