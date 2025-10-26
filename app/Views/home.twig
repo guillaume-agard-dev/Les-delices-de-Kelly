@@ -1,6 +1,48 @@
 {% extends "layout.twig" %}
 
 {% block content %}
-  <h2>Bienvenue !</h2>
-  <p>Page d’accueil rendue via <strong>Twig</strong> ✅</p>
+  <section class="hero" style="background-image:url('{{ base }}/assets/hero.jpg');">
+    <div class="hero__inner">
+      <h2 class="hero__title">Les Délices de Kelly</h2>
+      <p class="hero__subtitle">Recettes simples & gourmandes</p>
+      <a href="{{ base }}/recipes" class="btn">Voir les recettes</a>
+    </div>
+  </section>
+
+  {% if featured %}
+    <section style="margin-top:24px;">
+      <h3 style="margin:0 0 8px 0;">Dernière recette</h3>
+
+      <article>
+        <h2 style="margin:6px 0 8px 0;">
+          <a href="{{ base }}/recipes/{{ featured.slug }}" style="text-decoration:none; color:inherit;">
+            {{ featured.title }}
+          </a>
+        </h2>
+
+        {% if featured_cats %}
+          <div style="margin:6px 0 10px; display:flex; gap:6px; flex-wrap:wrap;">
+            {% for c in featured_cats %}
+              <a href="{{ base }}/recipes?cat={{ c.slug }}" class="badge">{{ c.name }}</a>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        {% if featured.image_path %}
+          <img src="{{ base }}/{{ featured.image_path }}" alt="{{ featured.title }}"
+               style="width:100%; max-width:900px; height:auto; border-radius:12px; display:block; margin:12px 0;">
+        {% endif %}
+
+        <p style="color:#666; margin:6px 0;">Publiée le {{ featured.created_at }}</p>
+
+        <div style="margin-top:12px;">{{ featured.content|nl2br }}</div>
+
+        <p style="margin-top:16px;">
+          <a href="{{ base }}/recipes/{{ featured.slug }}">Voir la fiche complète →</a>
+        </p>
+      </article>
+    </section>
+  {% else %}
+    <p style="margin-top:24px;">Aucune recette pour le moment.</p>
+  {% endif %}
 {% endblock %}
