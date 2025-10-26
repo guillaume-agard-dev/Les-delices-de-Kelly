@@ -4,6 +4,11 @@
   {% if recipe %}
     <article>
       <h2>{{ recipe.title }}</h2>
+      {% if recipe.image_path %}
+        <img src="{{ base }}/{{ recipe.image_path }}" alt="{{ recipe.title }}"
+            style="width:100%; max-width:900px; height:auto; border-radius:12px; display:block; margin:12px 0;">
+      {% endif %}
+
       <p style="color:#666;">Publiée le {{ recipe.created_at }}</p>
       <div style="margin-top:12px;">{{ recipe.content|nl2br }}</div>
 

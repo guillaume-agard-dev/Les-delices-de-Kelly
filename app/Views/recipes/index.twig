@@ -20,12 +20,18 @@
   {% if recipes is not empty %}
     <ul>
       {% for r in recipes %}
-        <li>
-          <a href="{{ base }}/recipes/{{ r.slug }}">
-            <strong>#{{ r.id }}</strong> — {{ r.title }}
-          </a>
-          <span style="color:#666;">(publiée le {{ r.created_at }})</span>
-        </li>
+      <li style="display:flex; gap:12px; align-items:center; margin:8px 0;">
+        {% if r.image_path %}
+          <img src="{{ base }}/{{ r.image_path }}" alt="{{ r.title }}"
+              class="recipe-thumb" width="160" height="106"
+              style="width:160px; height:106px; object-fit:cover; border-radius:8px;">
+        {% endif %}
+
+        <div>
+          <a href="{{ base }}/recipes/{{ r.slug }}"><strong>{{ r.title }}</strong></a><br>
+          <span style="color:#666;">Publiée le {{ r.created_at }}</span>
+        </div>
+      </li>
       {% endfor %}
     </ul>
   {% endif %}
