@@ -4,6 +4,14 @@
   {% if recipe %}
     <article>
       <h2>{{ recipe.title }}</h2>
+      {% if recipe_cats is defined and recipe_cats %}
+        <div style="margin:6px 0 10px; display:flex; gap:6px; flex-wrap:wrap;">
+          {% for c in recipe_cats %}
+            <a href="{{ base }}/recipes?cat={{ c.slug }}" class="badge">{{ c.name }}</a>
+          {% endfor %}
+        </div>
+      {% endif %}
+
       {% if recipe.image_path %}
         <img src="{{ base }}/{{ recipe.image_path }}" alt="{{ recipe.title }}"
             style="width:100%; max-width:900px; height:auto; border-radius:12px; display:block; margin:12px 0;">

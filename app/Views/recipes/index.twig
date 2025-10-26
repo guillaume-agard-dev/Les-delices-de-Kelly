@@ -3,10 +3,19 @@
 {% block content %}
   <h2>Recettes</h2>
 
-  <form method="get" action="{{ base }}/recipes" style="display:flex; gap:8px; align-items:center; margin:8px 0 16px;">
-    <input type="search" name="q" value="{{ q }}" placeholder="Rechercher une recette..." style="flex:1; padding:6px 8px;">
-    <button type="submit">Rechercher</button>
-    {% if q %}
+  <form method="get" action="{{ base }}/recipes" style="display:flex; gap:8px; align-items:center; margin:8px 0 16px; flex-wrap: wrap;">
+    <input type="search" name="q" value="{{ q }}" placeholder="Rechercher une recette..." style="flex:1; min-width: 220px; padding:6px 8px;">
+
+    <select name="cat" style="padding:6px 8px;">
+      <option value="">Toutes catégories</option>
+      {% for c in cats %}
+        <option value="{{ c.slug }}" {% if cat == c.slug %}selected{% endif %}>{{ c.name }}</option>
+      {% endfor %}
+    </select>
+
+    <button type="submit">Filtrer</button>
+
+    {% if q or cat %}
       <a href="{{ base }}/recipes" style="margin-left:8px;">Effacer</a>
     {% endif %}
   </form>
@@ -18,41 +27,56 @@
   {% endif %}
 
   {% if recipes is not empty %}
-    <ul>
+    <ul style="list-style:none; padding:0; margin:0;">
       {% for r in recipes %}
-      <li style="display:flex; gap:12px; align-items:center; margin:8px 0;">
-        {% if r.image_path %}
-          <img src="{{ base }}/{{ r.image_path }}" alt="{{ r.title }}"
-              class="recipe-thumb" width="160" height="106"
-              style="width:160px; height:106px; object-fit:cover; border-radius:8px;">
-        {% endif %}
+        <li style="display:flex; gap:12px; align-items:center; margin:12px 0;">
+          {% if r.image_path %}
+            <img src="{{ base }}/{{ r.image_path }}" alt="{{ r.title }}"
+                 class="recipe-thumb" width="160" height="106"
+                 style="width:160px; height:106px; object-fit:cover; border-radius:8px;">
+          {% endif %}
 
-        <div>
-          <a href="{{ base }}/recipes/{{ r.slug }}"><strong>{{ r.title }}</strong></a><br>
-          <span style="color:#666;">Publiée le {{ r.created_at }}</span>
-        </div>
-      </li>
+          <div>
+            <a href="{{ base }}/recipes/{{ r.slug }}"><strong>{{ r.title }}</strong></a><br>
+            <span style="color:#666;">Publiée le {{ r.created_at }}</span>
+
+            {# Badges catégories #}
+            {% set rcats = (catsByRecipe[r.id] ?? []) %}
+            {% if rcats %}
+              <div style="margin-top:6px; display:flex; gap:6px; flex-wrap:wrap;">
+                {% for c in rcats %}
+                  <a href="{{ base }}/recipes?cat={{ c.slug }}{% if q %}&q={{ q|url_encode }}{% endif %}"
+                     class="badge">{{ c.name }}</a>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+        </li>
       {% endfor %}
     </ul>
   {% endif %}
 
   {% if pages > 1 %}
+    {# Construire une base de querystring qui conserve q/cat #}
+    {% set parts = [] %}
+    {% if q %}{% set parts = parts|merge(['q=' ~ q|url_encode]) %}{% endif %}
+    {% if cat %}{% set parts = parts|merge(['cat=' ~ cat|url_encode]) %}{% endif %}
+    {% set baseqs = parts ? '?' ~ parts|join('&') ~ '&' : '?' %}
+
     <nav class="pagination" style="display:flex; gap:6px; flex-wrap:wrap; align-items:center; margin-top:16px;">
       {# Précédent #}
       {% if page > 1 %}
-        <a href="{{ base }}/recipes{% if q %}?q={{ q|url_encode }}&page={{ page-1 }}{% else %}?page={{ page-1 }}{% endif %}">‹ Précédent</a>
+        <a href="{{ base }}/recipes{{ baseqs }}page={{ page-1 }}">‹ Précédent</a>
       {% else %}
         <span style="opacity:.5;">‹ Précédent</span>
       {% endif %}
 
-      {# Fenêtre de pages autour de la page courante #}
-      {% set start = page - 2 %}
-      {% if start < 1 %}{% set start = 1 %}{% endif %}
-      {% set end = page + 2 %}
-      {% if end > pages %}{% set end = pages %}{% endif %}
+      {# Fenêtre autour de la page courante #}
+      {% set start = page - 2 %}{% if start < 1 %}{% set start = 1 %}{% endif %}
+      {% set end = page + 2 %}{% if end > pages %}{% set end = pages %}{% endif %}
 
       {% if start > 1 %}
-        <a href="{{ base }}/recipes{% if q %}?q={{ q|url_encode }}&page=1{% else %}?page=1{% endif %}">1</a>
+        <a href="{{ base }}/recipes{{ baseqs }}page=1">1</a>
         {% if start > 2 %}<span>…</span>{% endif %}
       {% endif %}
 
@@ -60,18 +84,18 @@
         {% if i == page %}
           <span style="font-weight:bold; text-decoration:underline;">{{ i }}</span>
         {% else %}
-          <a href="{{ base }}/recipes{% if q %}?q={{ q|url_encode }}&page={{ i }}{% else %}?page={{ i }}{% endif %}">{{ i }}</a>
+          <a href="{{ base }}/recipes{{ baseqs }}page={{ i }}">{{ i }}</a>
         {% endif %}
       {% endfor %}
 
       {% if end < pages %}
         {% if end < pages - 1 %}<span>…</span>{% endif %}
-        <a href="{{ base }}/recipes{% if q %}?q={{ q|url_encode }}&page={{ pages }}{% else %}?page={{ pages }}{% endif %}">{{ pages }}</a>
+        <a href="{{ base }}/recipes{{ baseqs }}page={{ pages }}">{{ pages }}</a>
       {% endif %}
 
       {# Suivant #}
       {% if page < pages %}
-        <a href="{{ base }}/recipes{% if q %}?q={{ q|url_encode }}&page={{ page+1 }}{% else %}?page={{ page+1 }}{% endif %}">Suivant ›</a>
+        <a href="{{ base }}/recipes{{ baseqs }}page={{ page+1 }}">Suivant ›</a>
       {% else %}
         <span style="opacity:.5;">Suivant ›</span>
       {% endif %}
