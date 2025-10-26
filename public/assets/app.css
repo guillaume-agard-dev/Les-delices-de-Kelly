@@ -17,3 +17,38 @@ hr { border: none; border-top: 1px solid #ddd; margin: 16px 0; }
   border: 1px solid #e0e0e0;
 }
 .badge:hover { background: #e9e9e9; }
+
+
+/* Hero */
+.hero {
+  position: relative;
+  min-height: 320px;
+  border-radius: 12px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  overflow: hidden;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.35));
+}
+.hero__inner { position: relative; padding: 48px; }
+.hero__title { margin: 0 0 8px 0; font-size: 40px; line-height: 1.1; }
+.hero__subtitle { margin: 0 0 16px 0; color: rgba(255,255,255,.9); }
+
+.btn {
+  display: inline-block;
+  padding: 10px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,.6);
+  color: #fff;
+  background: rgba(255,255,255,.12);
+  backdrop-filter: blur(2px);
+}
+.btn:hover { background: rgba(255,255,255,.18); }
