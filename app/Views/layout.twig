@@ -14,17 +14,40 @@
     <h1 style="margin:0 0 8px 0;">
       <a href="{{ base }}/" style="text-decoration:none; color:inherit;">{{ app_name }}</a>
     </h1>
-    <nav style="display:flex; gap:12px;">
+    <nav style="display:flex; gap:12px; align-items:center;">
       <a href="{{ base }}/">Accueil</a>
-      <a href="{{ base }}/about">À propos</a>
       <a href="{{ base }}/recipes">Recettes</a>
+      <a href="{{ base }}/about">À propos</a>
+
+      <span style="flex:1;"></span>
+
+      {% if auth_user %}
+        <span style="color:#555;">Bonjour, <strong>{{ auth_user.name }}</strong></span>
+
+        <form method="post" action="{{ base }}/logout" style="display:inline;">
+          <input type="hidden" name="_csrf" value="{{ csrf }}">
+          <button type="submit" class="linklike">Déconnexion</button>
+        </form>
+      {% else %}
+        <a href="{{ base }}/login">Se connecter</a>
+        <a href="{{ base }}/register" class="btn btn-solid">Créer un compte</a>
+      {% endif %}
     </nav>
+
     <hr>
   </header>
 
   <main>
+    {% if flash_ok %}
+      <div class="alert alert-ok">{{ flash_ok }}</div>
+    {% endif %}
+    {% if flash_err %}
+      <div class="alert alert-err">{{ flash_err }}</div>
+    {% endif %}
+
     {% block content %}{% endblock %}
   </main>
+
 
   <footer><hr>© {{ "now"|date("Y") }} — Mentions légales</footer>
 </body>

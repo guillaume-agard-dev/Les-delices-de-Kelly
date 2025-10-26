@@ -1,6 +1,31 @@
 <?php
 declare(strict_types=1);
 
+/* --- Session sécurisée --- */
+$https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+      || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443);
+
+ini_set('session.use_strict_mode', '1');
+
+session_set_cookie_params([
+  'lifetime' => 0, // session cookie
+  'path'     => rtrim(dirname($_SERVER['SCRIPT_NAME']), '/').'/',
+  'domain'   => '',      // défaut
+  'secure'   => $https,  // true si HTTPS
+  'httponly' => true,
+  'samesite' => 'Lax',
+]);
+
+session_name('ldk_sess');
+session_start();
+
+/* Renforce la session au premier passage */
+if (!isset($_SESSION['__init'])) {
+  session_regenerate_id(true);
+  $_SESSION['__init'] = 1;
+}
+
+
 require dirname(__DIR__) . '/vendor/autoload.php';
 
 use App\Core\Router;
@@ -38,6 +63,15 @@ $router->get('/recipes', [App\Controllers\RecipeController::class, 'index']);
 $router->get('/recipes/{slug}', [App\Controllers\RecipeController::class, 'show']);
 // About
 $router->get('/about', [App\Controllers\AboutController::class, 'index']);
+
+// Auth
+$router->get('/register', [App\Controllers\AuthController::class, 'register']);
+$router->post('/register', [App\Controllers\AuthController::class, 'registerPost']);
+
+$router->get('/login', [App\Controllers\AuthController::class, 'login']);
+$router->post('/login', [App\Controllers\AuthController::class, 'loginPost']);
+
+$router->post('/logout', [App\Controllers\AuthController::class, 'logout']); // bouton form POST
 
 
 
