@@ -3,9 +3,21 @@
 {% block content %}
   <h2>Recettes</h2>
 
-  {% if recipes is empty %}
-    <p>Aucune recette pour le moment.</p>
+  <form method="get" action="{{ base }}/recipes" style="display:flex; gap:8px; align-items:center; margin:8px 0 16px;">
+    <input type="search" name="q" value="{{ q }}" placeholder="Rechercher une recette..." style="flex:1; padding:6px 8px;">
+    <button type="submit">Rechercher</button>
+    {% if q %}
+      <a href="{{ base }}/recipes" style="margin-left:8px;">Effacer</a>
+    {% endif %}
+  </form>
+
+  {% if total > 0 %}
+    <p style="color:#666;">{{ total }} résultat{% if total > 1 %}s{% endif %} — page {{ page }}/{{ pages }}</p>
   {% else %}
+    <p>Aucun résultat.</p>
+  {% endif %}
+
+  {% if recipes is not empty %}
     <ul>
       {% for r in recipes %}
         <li>
@@ -18,8 +30,45 @@
     </ul>
   {% endif %}
 
+  {% if pages > 1 %}
+    <nav class="pagination" style="display:flex; gap:6px; flex-wrap:wrap; align-items:center; margin-top:16px;">
+      {# Précédent #}
+      {% if page > 1 %}
+        <a href="{{ base }}/recipes{% if q %}?q={{ q|url_encode }}&page={{ page-1 }}{% else %}?page={{ page-1 }}{% endif %}">‹ Précédent</a>
+      {% else %}
+        <span style="opacity:.5;">‹ Précédent</span>
+      {% endif %}
 
-  <p style="margin-top:16px;">
-    <a href="{{ base }}/">⟵ Retour à l’accueil</a>
-  </p>
+      {# Fenêtre de pages autour de la page courante #}
+      {% set start = page - 2 %}
+      {% if start < 1 %}{% set start = 1 %}{% endif %}
+      {% set end = page + 2 %}
+      {% if end > pages %}{% set end = pages %}{% endif %}
+
+      {% if start > 1 %}
+        <a href="{{ base }}/recipes{% if q %}?q={{ q|url_encode }}&page=1{% else %}?page=1{% endif %}">1</a>
+        {% if start > 2 %}<span>…</span>{% endif %}
+      {% endif %}
+
+      {% for i in start..end %}
+        {% if i == page %}
+          <span style="font-weight:bold; text-decoration:underline;">{{ i }}</span>
+        {% else %}
+          <a href="{{ base }}/recipes{% if q %}?q={{ q|url_encode }}&page={{ i }}{% else %}?page={{ i }}{% endif %}">{{ i }}</a>
+        {% endif %}
+      {% endfor %}
+
+      {% if end < pages %}
+        {% if end < pages - 1 %}<span>…</span>{% endif %}
+        <a href="{{ base }}/recipes{% if q %}?q={{ q|url_encode }}&page={{ pages }}{% else %}?page={{ pages }}{% endif %}">{{ pages }}</a>
+      {% endif %}
+
+      {# Suivant #}
+      {% if page < pages %}
+        <a href="{{ base }}/recipes{% if q %}?q={{ q|url_encode }}&page={{ page+1 }}{% else %}?page={{ page+1 }}{% endif %}">Suivant ›</a>
+      {% else %}
+        <span style="opacity:.5;">Suivant ›</span>
+      {% endif %}
+    </nav>
+  {% endif %}
 {% endblock %}
