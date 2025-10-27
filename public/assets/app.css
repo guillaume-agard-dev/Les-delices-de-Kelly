@@ -1,7 +1,7 @@
 
 :root {
   /* Palette perso */
-  --bg: #FAFFF5;     /* fond */
+  --bg: #FFFAFA;     /* fond */
   --fg: #031106;     /* texte principal */
   --brand: #D98DE0; /* primaire (rose/violet) */
   --accent: #5EE07B;  /* accent (vert) */
@@ -10,6 +10,9 @@
   --surface: #FFFFFF; /* cartes / surfaces */
   --border: #E7ECD9;  /* bordures légères */
 }
+
+[x-cloak] { display: none !important; }
+
 
 /* Typo globale */
 html, body {
@@ -241,3 +244,80 @@ hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
   font: inherit;
 }
 .linklike:hover { color: var(--accent); }
+
+
+/* Header de base */
+.site-header {
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 12px;
+}
+.topnav {
+  display: grid;
+  grid-template-columns: auto 1fr auto; /* burger/left | logo | right */
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+}
+
+/* Burger */
+.nav-burger {
+  display: none; /* visible en mobile */
+  background: none;
+  border: none;
+  color: var(--fg);
+  cursor: pointer;
+  padding: 8px;
+  z-index: 2;
+}
+.nav-burger svg{ display:block; } /* évite que le svg se comprime */
+
+/* Colonnes desktop */
+.nav-left,
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-right {
+  justify-content: end;
+}
+
+.nav-logo {
+  justify-self: center;
+}
+.nav-logo:hover {
+  background: none;
+}
+
+.nav-logo img {
+  height: 60px;
+  width: auto;
+  display: block;
+}
+
+/* Menu mobile */
+.mobile-menu {
+  display: none; /* contrôlé par x-show (block) */
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+.mobile-menu__inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 10px 0 14px;
+  display: grid;
+  gap: 10px;
+}
+.mobile-menu a { text-decoration: none; }
+
+/* Petits écrans */
+@media (max-width: 640px) {
+  .nav-burger { display:inline-flex; align-items:center; justify-content:center; }
+  .nav-left, .nav-right { display: none !important; }    /* on cache les liens desktop */
+  .nav-logo img { height: 44px; }
+  .mobile-menu { display: block; } /* ✅ visible en mobile, géré par x-show */
+}
+
+/* Optionnel : petit effet hover */
+.mobile-menu a:hover { text-decoration: underline; }
