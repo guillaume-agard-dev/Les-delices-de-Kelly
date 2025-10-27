@@ -2,7 +2,9 @@
 
 {% block content %}
   <div class="container">
+  <h2 class="about__h2">À propos</h2>
   <section class="about">
+  
     <div class="about__img">
       <img
         src="{{ base }}/uploads/about.jpg"
@@ -11,17 +13,50 @@
     </div>
 
     <div class="about__body">
-      <h2>À propos</h2>
+
       <p>
-        Bienvenue sur <strong>Les Délices de Kelly</strong> — un espace pour partager
-        des recettes simples, gourmandes et de saison. Mon objectif : des pas-à-pas
-        clairs, des ingrédients accessibles, et des idées pour le quotidien comme pour
-        les grandes occasions.
+        Je m’appelle <strong>Kelly</strong> et je cuisine depuis… toujours ! 🌿
+        Ici, je partage des recettes <strong>végétariennes</strong> et très souvent
+        <strong>100 % végétales (vegan)</strong>, pensées pour être simples, gourmandes
+        et accessibles au quotidien.
       </p>
 
-      {# Ajoute ici tes paragraphes réels, listes, etc. #}
-      {# <p> ... </p> #}
+      <p>
+        Mon objectif&nbsp;: des pas-à-pas clairs, des ingrédients faciles à trouver,
+        et des idées pour se faire plaisir sans se compliquer la vie. J’aime aller à
+        l’essentiel, tout en gardant une touche de créativité.
+      </p>
+
+      <h3>Ce que tu trouveras ici</h3>
+      <ul>
+        <li>Des plats <strong>végétariens &amp; vegan</strong> (avec des alternatives quand c’est utile).</li>
+        <li>Des recettes <strong>de saison</strong>, avec des produits simples et abordables.</li>
+        <li>Des fiches recettes structurées&nbsp;: temps, niveaux, astuces, variantes.</li>
+        <li>Des idées “<em>batch-cooking</em>” et <strong>anti-gaspi</strong> quand c’est pertinent.</li>
+      </ul>
+
+      <h3>Mes engagements</h3>
+      <ul>
+        <li><strong>Saisonnalité</strong> et respect du produit.</li>
+        <li><strong>Simplicité</strong> (peu d’ustensiles, étapes claires).</li>
+        <li><strong>Gourmandise &amp; nutrition</strong> en équilibre.</li>
+        <li><strong>Budget</strong> maîtrisé&nbsp;: maximiser le goût, pas la facture.</li>
+      </ul>
+
+      <h3>Comment je construis une recette</h3>
+      <ul>
+        <li>Étapes nettes et <strong>ingrédients substituables</strong> quand c’est possible.</li>
+        <li>Petits <strong>conseils</strong> (cuisson, textures, assaisonnement).</li>
+        <li>Idées de <strong>variantes</strong> (sans gluten, plus protéiné, plus rapide…).</li>
+        <li>Infos <strong>conservation</strong> (frigo/congélation) quand c’est utile.</li>
+      </ul>
+
+      <p style="margin-top:10px;">
+        Prêt·e à cuisiner&nbsp;? Découvre toutes les recettes&nbsp;:
+        <a class="btn btn-solid" href="{{ base }}/recipes">Voir les recettes</a>
+      </p>
     </div>
+
   </section>
   </div>
 {% endblock %}
