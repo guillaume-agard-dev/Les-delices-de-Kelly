@@ -197,19 +197,51 @@ hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
 }
 
 /* Responsive */
-@media (max-width: 900px){
-  .about{ grid-template-columns: 1fr; }
-  .about__img{ order: -1; }   /* image au-dessus sur mobile */
+@media (max-width: 900px) {
+  .about {
+    grid-template-columns: 1fr;
+  }
+
+  .about__img {
+    order: -1;
+  }
+
+  /* image au-dessus sur mobile */
 }
 
-/* About - Page d'accueil */
+/* ===== Intro À propos (home) ===== */
 .about-intro{
+  display: grid;
+  grid-template-columns: 1fr minmax(260px, 420px); /* texte | image droite */
+  gap: 16px;
+  align-items: center;
   margin-top: 22px;
   padding: 16px 18px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 12px;
   box-shadow: 0 3px 12px rgba(0,0,0,.04);
+}
+
+.about-intro__img img{
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2 / 3;       /* 800x1200 */
+  object-fit: cover;
+  border-radius: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: 0 6px 20px rgba(0,0,0,.06);
+}
+
+/* Mobile : on empile, image sous le texte */
+@media (max-width: 900px) {
+  .about-intro {
+    grid-template-columns: 1fr;
+  }
+  .about-intro__img {
+    order: 2;
+  }
 }
 
 
