@@ -72,25 +72,35 @@ hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
   position:absolute; inset:0;
   /* voile plus léger, on enlève la couche noire uniforme */
   background: radial-gradient(60% 65% at 50% 40%,
-              rgba(0,0,0,.06), rgba(0,0,0,.10) 70%);
+              rgba(0,0,0,.1), rgba(0,0,0,.15) 70%);
 }
 
 .hero__inner { position: relative; padding: 48px; }
-.hero__inner :is(.hero__title){
+/* .hero__inner :is(.hero__title){
   text-shadow: 0 2px 8px rgba(0,0,0,.25);
-}
+} */
 
 /* Titre du Hero UNIQUEMENT en Rouge Script */
 .hero__title {
   font-family: "Rouge Script", cursive;
-  color: var(--accent);
-  font-size: 48px;
+  color: var(--bg);
+  font-size: 100px;
   line-height: 1.05;
   margin: 0 0 8px 0;
+  text-shadow:
+    0 2px 8px rgba(0,0,0,.35),  /* halo doux principal */
+    0 1px 0 rgba(0,0,0,.25);     /* léger relief */
 }
 
 /* Sous-titre hero (Libre Franklin) */
-.hero__subtitle { margin: 0 0 16px 0; color: rgba(255,255,255,.92); }
+.hero__subtitle { 
+  margin: 0 0 16px 0; 
+  color: rgba(255,255,255,.92);
+  text-transform: uppercase;
+  font-size: 20px; 
+  font-weight: 600;
+  text-shadow: 0 1px 8px rgba(0,0,0,.25);
+}
 
 /* Boutons */
 .btn {
@@ -103,6 +113,23 @@ hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
   background: rgba(255,255,255,.12);
   backdrop-filter: blur(2px);
 }
+.btn-hero {
+  display: inline-block;
+  padding: 10px 14px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 500;
+  border: 1px solid var(--accent);
+  color: #fff;
+  background: rgba(94,224,123,.12);
+  backdrop-filter: blur(2px);
+}
+.btn-hero:hover {
+  background: rgba(94,224,123,.85);
+  color: #fff;
+  font-weight: 500;
+}
+
 .btn:hover { background: rgba(255,255,255,.2); }
 
 /* Variante pleine (vert brand) */
@@ -321,3 +348,25 @@ hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
 
 /* Optionnel : petit effet hover */
 .mobile-menu a:hover { text-decoration: underline; }
+
+
+/* Hero plein écran (full-bleed) */
+.hero--full {
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  width: 100vw;
+  max-width: 100vw;
+  border-radius: 0;           /* bord carré sur toute la largeur */
+  border-left: none;
+  border-right: none;
+}
+
+/* Contenu centré dans le hero plein écran */
+.hero--full .hero__inner {
+  max-width: 960px;           /* même largeur que ta page */
+  margin: 0 auto;
+  padding: 48px 24px;         /* un peu de respiration sur mobile */
+}
