@@ -1,6 +1,7 @@
 {% extends "layout.twig" %}
 
 {% block content %}
+  <div class="container">
   {% if recipe %}
     <article>
       <h2>{{ recipe.title }}</h2>
@@ -29,4 +30,5 @@
     <p>La recette demandée n’existe pas ou a été supprimée.</p>
     <p><a href="{{ base }}/recipes">⟵ Retour à la liste</a></p>
   {% endif %}
+  </div>
 {% endblock %}

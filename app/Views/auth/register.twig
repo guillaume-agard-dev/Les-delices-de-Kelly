@@ -1,6 +1,7 @@
 {% extends "layout.twig" %}
 
 {% block content %}
+  <div class="container">
   <h2>Créer un compte</h2>
 
   <form method="post" action="{{ base }}/register" class="form-auth">
@@ -37,4 +38,5 @@
       <a href="{{ base }}/login" style="margin-left:8px;">Déjà inscrit ? Se connecter</a>
     </div>
   </form>
+  </div>
 {% endblock %}
