@@ -4,7 +4,7 @@
 
   {# Hero #}
   <section class="hero hero--full" style="background-image:url('{{ base }}/assets/hero.jpg');">
-    <div class="hero__inner">
+    <div class="hero__inner container">
       <h2 class="hero__title">Les Délices de Kelly</h2>
       <p class="hero__subtitle">Recettes simples & gourmandes</p>
       <a href="{{ base }}/recipes" class="btn-hero">Voir les recettes</a>
@@ -12,7 +12,7 @@
   </section>
 
   {# About #}
-  <section class="about-intro">
+  <section class="about-intro container">
     <h3 style="margin:0 0 6px 0;">À propos</h3>
     <p>
       Bienvenue sur <strong>Les Délices de Kelly</strong> 👩🏼‍🍳 — un espace pour partager
@@ -27,7 +27,7 @@
 
   {# Last recipes #}
   {% if featured %}
-    <section style="margin-top:24px;">
+    <section class="container" style="margin-top:24px;">
       <h3 style="margin:0 0 8px 0;">La recette du moment</h3>
 
       <article>
@@ -52,7 +52,7 @@
 
         <p style="color:#666; margin:6px 0;">Publiée le {{ featured.created_at }}</p>
 
-        <div style="margin-top:12px;">{{ featured.content|nl2br }}</div>
+        {# <div style="margin-top:12px;">{{ featured.content|nl2br }}</div> #}
 
         <p style="margin-top:16px;">
           <a href="{{ base }}/recipes/{{ featured.slug }}">Voir la fiche complète →</a>

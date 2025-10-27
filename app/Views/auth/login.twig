@@ -1,6 +1,7 @@
 {% extends "layout.twig" %}
 
 {% block content %}
+  <div class="container">
   <h2>Se connecter</h2>
 
   {% if errors.form %}
@@ -28,4 +29,5 @@
       <a href="{{ base }}/register" style="margin-left:8px;">Créer un compte</a>
     </div>
   </form>
+  </div>
 {% endblock %}

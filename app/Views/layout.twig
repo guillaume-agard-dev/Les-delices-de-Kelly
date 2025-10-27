@@ -10,8 +10,9 @@
 
   <link rel="stylesheet" href="{{ base }}/assets/app.css">
 </head>
-<body style="font-family: system-ui, sans-serif; max-width: 960px; margin: 32px auto; line-height:1.6;">
+<body style="font-family: system-ui, sans-serif; line-height:1.6;">
   <header class="site-header" x-data="{ open:false }" @keydown.escape.window="open=false">
+  <div class="container">
     <nav class="topnav">
       <!-- Burger (mobile uniquement) -->
       <button class="nav-burger" aria-label="Ouvrir le menu"
@@ -77,21 +78,26 @@
         {% endif %}
       </div>
     </div>
+    </div>
   </header>
 
 
   <main>
+  <div class="container">
     {% if flash_ok %}
       <div class="alert alert-ok">{{ flash_ok }}</div>
     {% endif %}
     {% if flash_err %}
       <div class="alert alert-err">{{ flash_err }}</div>
     {% endif %}
+  </div>
 
     {% block content %}{% endblock %}
   </main>
 
 
-  <footer><hr>© {{ "now"|date("Y") }} — Mentions légales</footer>
+  <footer>
+    <div class="container"><hr>© {{ "now"|date("Y") }} — Mentions légales</div>
+  </footer>
 </body>
 </html>
