@@ -180,6 +180,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
   gap: 24px;
   align-items: start;
   margin-top: 24px;
+  text-align: justify;
 }
 .about__img img{
   width: 100%;
@@ -190,10 +191,12 @@ hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
   background: var(--surface);
   border: 1px solid var(--border);
   box-shadow: 0 6px 20px rgba(0,0,0,.06);
+  margin-top: 24px;
 }
-.about__body h2{
+.about__h2{
   margin-top: 0;
   font-size: 32px;
+  text-align: center;
 }
 
 /* Responsive */
@@ -209,11 +212,12 @@ hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
   /* image au-dessus sur mobile */
 }
 
-/* ===== Intro À propos (home) ===== */
-.about-intro{
+/* ===== Intro À propos (home) — version image carrée ===== */
+.about-intro {
   display: grid;
-  grid-template-columns: 1fr minmax(260px, 420px); /* texte | image droite */
-  gap: 16px;
+  /* texte (2/3) | image (1/3) pour donner de l'air au texte */
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
   align-items: center;
   margin-top: 22px;
   padding: 16px 18px;
@@ -223,10 +227,19 @@ hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
   box-shadow: 0 3px 12px rgba(0,0,0,.04);
 }
 
+/* Limiter la longueur des lignes pour une meilleure lisibilité */
+.about-intro__text { 
+  max-width: 65ch; 
+}
+
+/* Image carrée à droite */
+.about-intro__img { 
+  justify-self: end; 
+}
 .about-intro__img img{
   width: 100%;
-  height: auto;
-  aspect-ratio: 2 / 3;       /* 800x1200 */
+  max-width: 360px;       /* ajustable 420–480px */
+  aspect-ratio: 1 / 1;    /* ✅ carré */
   object-fit: cover;
   border-radius: 12px;
   background: var(--surface);
@@ -234,15 +247,13 @@ hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
   box-shadow: 0 6px 20px rgba(0,0,0,.06);
 }
 
-/* Mobile : on empile, image sous le texte */
-@media (max-width: 900px) {
-  .about-intro {
-    grid-template-columns: 1fr;
-  }
-  .about-intro__img {
-    order: 2;
-  }
+/* Mobile : on empile, image au dessus du texte */
+@media (max-width: 900px){
+  .about-intro{ grid-template-columns: 1fr; }
+  .about-intro__img{ order: -1; justify-self: start; }
+  .about-intro__img img{ max-width: 100%; }
 }
+
 
 
 /* Message flash login/register */
