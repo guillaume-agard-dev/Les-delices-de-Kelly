@@ -47,6 +47,10 @@
       <!-- Zone droite (desktop) -->
       <div class="nav-right">
         {% if auth_user %}
+          {% if auth_user and auth_user.role == 'admin' %}
+            <a href="{{ base }}/admin">Admin</a>
+          {% endif %}
+
           <span class="nav-hello">Bonjour, <strong>{{ auth_user.name }}</strong></span>
           <form method="post" action="{{ base }}/logout" style="display:inline;">
             <input type="hidden" name="_csrf" value="{{ csrf }}">

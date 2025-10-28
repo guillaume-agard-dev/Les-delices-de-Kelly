@@ -73,6 +73,9 @@ $router->post('/login', [App\Controllers\AuthController::class, 'loginPost']);
 
 $router->post('/logout', [App\Controllers\AuthController::class, 'logout']); // bouton form POST
 
+// Admin
+$router->get('/admin', [App\Controllers\AdminController::class, 'index']);
+
 
 
 // Dispatch

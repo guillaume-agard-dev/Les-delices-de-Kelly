@@ -30,6 +30,25 @@ final class Auth
         return isset($_SESSION['user']) && ($_SESSION['user']['role'] ?? 'user') === 'admin';
     }
 
+    public static function requireAdminOrRedirect(): void
+    {
+        if (!self::isAdmin()) {
+            \App\Core\Flash::set('err', 'Accès réservé aux administrateurs.');
+
+            // Base URL (même logique que View::init)
+            $base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/');
+            if ($base === '/') $base = '';
+
+            // Chemin courant (pour retourner ici après login)
+            $uri  = $_SERVER['REQUEST_URI'] ?? '/';
+            $path = parse_url($uri, PHP_URL_PATH) ?: '/';
+
+            header('Location: ' . $base . '/login?next=' . $path);
+            exit;
+        }
+    }
+
+
     /** Déconnexion sécurisée */
     public static function logout(): void
     {
