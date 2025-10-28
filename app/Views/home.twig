@@ -14,7 +14,7 @@
   {# About #}
   <section class="about-intro container">
     <div class="about-intro__text">
-      <h3 style="margin:0 0 6px 0;">À propos 👩🏼‍🍳</h3>
+      <h3 style="margin:0 0 6px 0;">À propos 🌻</h3>
       <p>
         Je m’appelle <strong>Kelly</strong> et je partage des recettes
         <strong>végétariennes</strong> et souvent <strong>100 % végétales</strong>,
@@ -55,14 +55,14 @@
           </div>
         {% endif %}
 
-        {% if featured.image_path %}
-          <img src="{{ base }}/{{ featured.image_path }}" alt="{{ featured.title }}"
-               style="width:100%; max-width:900px; height:auto; border-radius:12px; display:block; margin:12px 0;">
+        {% if featured.image %}
+          <img src="{{ base }}/{{ featured.image }}" alt="{{ featured.title }}"
+              style="width:100%; max-width:900px; height:auto; border-radius:12px; display:block; margin:12px 0;">
         {% endif %}
 
         <p style="color:#666; margin:6px 0;">Publiée le {{ featured.created_at }}</p>
+        <div style="margin-top:12px;">{{ featured.summary|nl2br }}</div>
 
-        {# <div style="margin-top:12px;">{{ featured.content|nl2br }}</div> #}
 
         <p style="margin-top:16px;">
           <a href="{{ base }}/recipes/{{ featured.slug }}">Voir la fiche complète →</a>
