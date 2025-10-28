@@ -1,0 +1,19 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+  <div class="container">
+    <h2>Admin — Tableau de bord</h2>
+
+    <div class="admin-grid">
+      <a class="admin-card" href="{{ base }}/admin/recipes">
+        <h3>Gérer les recettes</h3>
+        <p>Créer, éditer, publier.</p>
+      </a>
+
+      <a class="admin-card" href="{{ base }}/admin/categories">
+        <h3>Gérer les catégories</h3>
+        <p>Ajouter, renommer, supprimer.</p>
+      </a>
+    </div>
+  </div>
+{% endblock %}

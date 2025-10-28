@@ -450,3 +450,23 @@ hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
 .steps-flat li{
   margin: 6px 0;      /* petit espacement entre les étapes */
 }
+
+
+/* Admin */
+.admin-grid {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+.admin-card {
+  display: block;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  text-decoration: none;
+  color: inherit;
+}
+.admin-card:hover { border-color: var(--accent); }
+.admin-card h3 { margin: 0 0 6px 0; }
