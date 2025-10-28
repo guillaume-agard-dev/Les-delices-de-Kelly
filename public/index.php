@@ -75,6 +75,20 @@ $router->post('/logout', [App\Controllers\AuthController::class, 'logout']); // 
 
 // Admin
 $router->get('/admin', [App\Controllers\AdminController::class, 'index']);
+// Admin — Catégories
+$router->get('/admin/categories',              [App\Controllers\AdminCategoryController::class, 'index']);
+$router->post('/admin/categories/create',      [App\Controllers\AdminCategoryController::class, 'create']);
+$router->post('/admin/categories/{id}/rename', [App\Controllers\AdminCategoryController::class, 'rename']);
+$router->post('/admin/categories/{id}/delete', [App\Controllers\AdminCategoryController::class, 'delete']);
+// Admin — Recettes
+$router->get('/admin/recipes',             [App\Controllers\AdminRecipeController::class, 'index']);
+$router->get('/admin/recipes/create',      [App\Controllers\AdminRecipeController::class, 'create']);  // à venir
+$router->post('/admin/recipes/create',     [App\Controllers\AdminRecipeController::class, 'store']);   // à venir
+$router->get('/admin/recipes/{id}/edit',   [App\Controllers\AdminRecipeController::class, 'edit']);    // à venir
+$router->post('/admin/recipes/{id}/edit',  [App\Controllers\AdminRecipeController::class, 'update']);  // à venir
+$router->post('/admin/recipes/{id}/delete',[App\Controllers\AdminRecipeController::class, 'delete']);  // à venir
+$router->post('/admin/recipes/{id}/publish',[App\Controllers\AdminRecipeController::class, 'togglePublish']); // à venir
+
 
 
 
