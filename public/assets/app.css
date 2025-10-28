@@ -470,3 +470,40 @@ hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
 }
 .admin-card:hover { border-color: var(--accent); }
 .admin-card h3 { margin: 0 0 6px 0; }
+
+/* Admin - table+form */
+.form-inline { display:flex; gap:8px; align-items:center; margin:12px 0; }
+.form-inline input[type="text"]{
+  padding: 8px 10px; border:1px solid var(--border); border-radius:8px; background:var(--surface);
+}
+
+.admin-table{ width:100%; border-collapse: collapse; margin-top:12px; }
+.admin-table th, .admin-table td{
+  border:1px solid var(--border);
+  padding:8px 10px;
+  vertical-align: middle;
+  background: var(--surface);
+}
+.admin-table thead th{ background: #f7faf1; } /* léger rappel de la palette */
+
+.btn-crud {
+  display: inline-block;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: #e9f9ef;
+  border: 1px solid #b6efc8;
+  color: #0b5137;
+  text-decoration: none;
+  cursor: pointer;
+}
+.btn-danger {
+  display: inline-block;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: #fdecec;
+  border: 1px solid #f5c2c7;
+  color: #842029;
+  text-decoration: none;
+  cursor: pointer;
+}
+.btn-danger:hover{ filter: brightness(0.98); }

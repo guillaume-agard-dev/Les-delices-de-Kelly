@@ -1,0 +1,129 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+  <div class="container">
+    <h2>Recettes</h2>
+
+    <p>
+      <a class="btn btn-solid" href="{{ base }}/admin/recipes/create">+ Nouvelle recette</a>
+    </p>
+
+    <form method="get" action="{{ base }}/admin/recipes" class="form-inline" style="flex-wrap:wrap;">
+      <input type="search" name="q" value="{{ q }}" placeholder="Recherche (titre, résumé, ingrédients, tags)" style="min-width:260px;">
+      <select name="cat">
+        <option value="">Toutes catégories</option>
+        {% for c in cats %}
+          <option value="{{ c.slug }}" {% if cat == c.slug %}selected{% endif %}>{{ c.name }}</option>
+        {% endfor %}
+      </select>
+      <select name="diet">
+        <option value="">Tous régimes</option>
+        <option value="vegan" {% if diet == 'vegan' %}selected{% endif %}>Vegan</option>
+        <option value="vegetarien" {% if diet == 'vegetarien' %}selected{% endif %}>Végétarien</option>
+      </select>
+      <select name="published">
+        <option value="">Tout statut</option>
+        <option value="1" {% if published == '1' %}selected{% endif %}>Publiées</option>
+        <option value="0" {% if published == '0' %}selected{% endif %}>Brouillons</option>
+      </select>
+      <button type="submit">Filtrer</button>
+      {% if q or cat or diet or published %}
+        <a href="{{ base }}/admin/recipes">Effacer</a>
+      {% endif %}
+    </form>
+
+    <p style="color:#666;">{{ total }} résultat{% if total>1 %}s{% endif %} — page {{ page }}/{{ pages }}</p>
+
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Recette</th>
+          <th>Régime</th>
+          <th>Catégories</th>
+          <th>Publié</th>
+          <th>Créée</th>
+          <th style="width:220px;">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in rows %}
+          <tr>
+            <td>
+              {% if r.image %}
+                <img src="{{ base }}/{{ r.image }}" alt="" style="width:46px;height:46px;object-fit:cover;border-radius:8px;vertical-align:middle;margin-right:8px;border:1px solid var(--border);">
+              {% endif %}
+              <strong>{{ r.title }}</strong><br>
+              <small><a href="{{ base }}/recipes/{{ r.slug }}" target="_blank" rel="noopener">Voir sur le site ↗</a></small>
+            </td>
+            <td>{{ r.diet ? (r.diet == 'vegan' ? 'Vegan' : 'Végétarien') : '—' }}</td>
+            <td>
+              {% set rcats = (catsByRecipe[r.id] ?? []) %}
+              {% if rcats %}
+                {% for c in rcats %}
+                  <span class="badge">{{ c.name }}</span>
+                {% endfor %}
+              {% else %}
+                —
+              {% endif %}
+            </td>
+            <td>
+              {% if r.published %}<span class="badge">Oui</span>{% else %}<span class="badge">Non</span>{% endif %}
+            </td>
+            <td>{{ r.created_at }}</td>
+            <td>
+              <a class="btn-crud" href="{{ base }}/admin/recipes/{{ r.id }}/edit">Éditer</a>
+              <form method="post" action="{{ base }}/admin/recipes/{{ r.id }}/delete" style="display:inline;" onsubmit="return confirm('Supprimer « {{ r.title|e }} » ?');">
+                <input type="hidden" name="_csrf" value="{{ csrf }}">
+                <button type="submit" class="btn-danger">Supprimer</button>
+              </form>
+            </td>
+          </tr>
+        {% else %}
+          <tr><td colspan="6">Aucune recette.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    {% if pages > 1 %}
+      {% set parts = [] %}
+      {% if q %}{% set parts = parts|merge(['q=' ~ q|url_encode]) %}{% endif %}
+      {% if cat %}{% set parts = parts|merge(['cat=' ~ cat|url_encode]) %}{% endif %}
+      {% if diet %}{% set parts = parts|merge(['diet=' ~ diet|url_encode]) %}{% endif %}
+      {% if published %}{% set parts = parts|merge(['published=' ~ published|url_encode]) %}{% endif %}
+      {% set baseqs = parts ? '?' ~ parts|join('&') ~ '&' : '?' %}
+
+      <nav class="pagination" style="display:flex; gap:6px; flex-wrap:wrap; align-items:center; margin-top:12px;">
+        {% if page > 1 %}
+          <a href="{{ base }}/admin/recipes{{ baseqs }}page={{ page-1 }}">‹ Précédent</a>
+        {% else %}
+          <span style="opacity:.5;">‹ Précédent</span>
+        {% endif %}
+
+        {% set start = page - 2 %}{% if start < 1 %}{% set start = 1 %}{% endif %}
+        {% set end = page + 2 %}{% if end > pages %}{% set end = pages %}{% endif %}
+
+        {% if start > 1 %}
+          <a href="{{ base }}/admin/recipes{{ baseqs }}page=1">1</a>
+          {% if start > 2 %}<span>…</span>{% endif %}
+        {% endif %}
+        {% for i in start..end %}
+          {% if i == page %}
+            <span style="font-weight:bold; text-decoration:underline;">{{ i }}</span>
+          {% else %}
+            <a href="{{ base }}/admin/recipes{{ baseqs }}page={{ i }}">{{ i }}</a>
+          {% endif %}
+        {% endfor %}
+        {% if end < pages %}
+          {% if end < pages - 1 %}<span>…</span>{% endif %}
+          <a href="{{ base }}/admin/recipes{{ baseqs }}page={{ pages }}">{{ pages }}</a>
+        {% endif %}
+
+        {% if page < pages %}
+          <a href="{{ base }}/admin/recipes{{ baseqs }}page={{ page+1 }}">Suivant ›</a>
+        {% else %}
+          <span style="opacity:.5;">Suivant ›</span>
+        {% endif %}
+      </nav>
+    {% endif %}
+  </div>
+{% endblock %}

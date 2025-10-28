@@ -1,0 +1,51 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+  <div class="container">
+    <h2>Catégories</h2>
+
+    {# Formulaire d’ajout #}
+    <form method="post" action="{{ base }}/admin/categories/create" class="form-inline">
+      <input type="hidden" name="_csrf" value="{{ csrf }}">
+      <input type="text" name="name" placeholder="Nom de la catégorie" required minlength="2">
+      <button type="submit" class="btn btn-solid">Ajouter</button>
+    </form>
+
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Slug</th>
+          <th>Recettes</th>
+          <th style="width:260px;">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in rows %}
+          <tr>
+            <td>
+              <form method="post" action="{{ base }}/admin/categories/{{ c.id }}/rename" class="form-inline">
+                <input type="hidden" name="_csrf" value="{{ csrf }}">
+                <input type="text" name="name" value="{{ c.name|e }}" required minlength="2">
+                <button type="submit">Renommer</button>
+              </form>
+            </td>
+            <td><code>{{ c.slug }}</code></td>
+            <td>{{ c.nrecipes }}</td>
+            <td>
+              <form method="post" action="{{ base }}/admin/categories/{{ c.id }}/delete"
+                    onsubmit="return confirm('Supprimer la catégorie « {{ c.name|e }} » ?');"
+                    style="display:inline;">
+                <input type="hidden" name="_csrf" value="{{ csrf }}">
+                <button type="submit" class="btn-danger">Supprimer</button>
+              </form>
+              <a class="btn-crud" href="{{ base }}/recipes?cat={{ c.slug }}" target="_blank" rel="noopener">Voir sur le site</a>
+            </td>
+          </tr>
+        {% else %}
+          <tr><td colspan="4">Aucune catégorie.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
