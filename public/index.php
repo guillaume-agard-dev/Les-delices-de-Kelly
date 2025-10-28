@@ -82,12 +82,16 @@ $router->post('/admin/categories/{id}/rename', [App\Controllers\AdminCategoryCon
 $router->post('/admin/categories/{id}/delete', [App\Controllers\AdminCategoryController::class, 'delete']);
 // Admin — Recettes
 $router->get('/admin/recipes',             [App\Controllers\AdminRecipeController::class, 'index']);
-$router->get('/admin/recipes/create',      [App\Controllers\AdminRecipeController::class, 'create']);  // à venir
-$router->post('/admin/recipes/create',     [App\Controllers\AdminRecipeController::class, 'store']);   // à venir
-$router->get('/admin/recipes/{id}/edit',   [App\Controllers\AdminRecipeController::class, 'edit']);    // à venir
-$router->post('/admin/recipes/{id}/edit',  [App\Controllers\AdminRecipeController::class, 'update']);  // à venir
-$router->post('/admin/recipes/{id}/delete',[App\Controllers\AdminRecipeController::class, 'delete']);  // à venir
-$router->post('/admin/recipes/{id}/publish',[App\Controllers\AdminRecipeController::class, 'togglePublish']); // à venir
+$router->get('/admin/recipes/create',      [App\Controllers\AdminRecipeController::class, 'create']);  
+$router->post('/admin/recipes/create',     [App\Controllers\AdminRecipeController::class, 'store']);   
+$router->get('/admin/recipes/{id}/edit',   [App\Controllers\AdminRecipeController::class, 'edit']);    
+$router->post('/admin/recipes/{id}/edit',  [App\Controllers\AdminRecipeController::class, 'update']);  
+$router->post('/admin/recipes/{id}/delete',[App\Controllers\AdminRecipeController::class, 'delete']);  
+$router->post('/admin/recipes/{id}/publish',[App\Controllers\AdminRecipeController::class, 'togglePublish']); 
+
+// Commentaires
+$router->post('/recipes/{slug}/comments', [App\Controllers\RecipeController::class, 'commentPost']);
+
 
 
 

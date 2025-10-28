@@ -85,5 +85,45 @@
       <p>La recette demandée n’existe pas ou a été supprimée.</p>
       <p><a href="{{ base }}/recipes">⟵ Retour à la liste</a></p>
     {% endif %}
+
+    <hr style="margin:18px 0;">
+
+    <section id="comments">
+      <h3>Commentaires</h3>
+
+      {# Lecture publique #}
+      {% if comments %}
+        <ul style="list-style:none; padding:0; margin:10px 0; display:grid; gap:10px;">
+          {% for c in comments %}
+            <li style="border:1px solid var(--border); border-radius:10px; background:var(--surface); padding:10px 12px;">
+              <div style="font-size:13px; color:#666; margin-bottom:4px;">
+                <strong>{{ c.name }}</strong> — {{ c.created_at }}
+              </div>
+              <div>{{ c.body|e|nl2br }}</div>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>Aucun commentaire pour le moment.</p>
+      {% endif %}
+
+      {# Formulaire si connecté #}
+      {% if auth_user %}
+        <form method="post" action="{{ base }}/recipes/{{ recipe.slug }}/comments" style="margin-top:12px;">
+          <input type="hidden" name="_csrf" value="{{ csrf }}">
+          <label for="comment-body" style="display:block; margin-bottom:6px;">Votre commentaire</label>
+          <textarea id="comment-body" name="body" rows="4" required minlength="3" maxlength="2000"
+                    style="width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:10px;"></textarea>
+          <div style="margin-top:8px;">
+            <button type="submit" class="btn btn-solid">Publier</button>
+          </div>
+        </form>
+      {% else %}
+        <p style="margin-top:10px;">
+          <a href="{{ base }}/login?next={{ base }}/recipes/{{ recipe.slug }}#comments">Se connecter pour commenter</a>
+        </p>
+      {% endif %}
+    </section>
+
   </div>
 {% endblock %}
