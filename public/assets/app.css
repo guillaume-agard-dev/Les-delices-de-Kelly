@@ -296,7 +296,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
   padding: 10px 12px;
   border-radius: 10px;
   border: 1px solid var(--border);
-  background: var(--surface);
+  background: rgba(94, 224, 123, 0.1);
   color: var(--fg);
 }
 
