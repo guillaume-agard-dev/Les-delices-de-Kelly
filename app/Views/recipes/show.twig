@@ -2,33 +2,88 @@
 
 {% block content %}
   <div class="container">
-  {% if recipe %}
-    <article>
-      <h2>{{ recipe.title }}</h2>
-      {% if recipe_cats is defined and recipe_cats %}
-        <div style="margin:6px 0 10px; display:flex; gap:6px; flex-wrap:wrap;">
-          {% for c in recipe_cats %}
-            <a href="{{ base }}/recipes?cat={{ c.slug }}" class="badge">{{ c.name }}</a>
-          {% endfor %}
+    {% if recipe %}
+      <article>
+        <h2>{{ recipe.title }}</h2>
+
+        <div style="display:flex; gap:8px; flex-wrap:wrap; margin:6px 0 10px;">
+          {% if recipe.diet %}
+            <span class="badge">{{ recipe.diet == 'vegan' ? 'Vegan' : 'Végétarien' }}</span>
+          {% endif %}
+          {% if recipe.difficulty %}<span class="badge">Difficulté: {{ recipe.difficulty }}</span>{% endif %}
+          {% if recipe.prep_minutes is not null %}<span class="badge">Prépa: {{ recipe.prep_minutes }} min</span>{% endif %}
+          {% if recipe.cook_minutes is not null %}<span class="badge">Cuisson: {{ recipe.cook_minutes }} min</span>{% endif %}
+          {% if recipe.servings is not null %}<span class="badge">{{ recipe.servings }} pers.</span>{% endif %}
         </div>
-      {% endif %}
 
-      {% if recipe.image_path %}
-        <img src="{{ base }}/{{ recipe.image_path }}" alt="{{ recipe.title }}"
-            style="width:100%; max-width:900px; height:auto; border-radius:12px; display:block; margin:12px 0;">
-      {% endif %}
+        {% if recipe.image %}
+          <img src="{{ base }}/{{ recipe.image }}" alt="{{ recipe.title }}"
+               style="width:100%; max-width:900px; height:auto; border-radius:12px; display:block; margin:12px 0;">
+        {% endif %}
 
-      <p style="color:#666;">Publiée le {{ recipe.created_at }}</p>
-      <div style="margin-top:12px;">{{ recipe.content|nl2br }}</div>
+        {% if recipe.summary %}
+          <p style="color:#333; margin:6px 0 14px;">{{ recipe.summary }}</p>
+        {% endif %}
 
-      <p style="margin-top:16px;">
-        <a href="{{ base }}/recipes">⟵ Retour à la liste</a>
-      </p>
-    </article>
-  {% else %}
-    <h2>Recette introuvable</h2>
-    <p>La recette demandée n’existe pas ou a été supprimée.</p>
-    <p><a href="{{ base }}/recipes">⟵ Retour à la liste</a></p>
-  {% endif %}
+        <div class="recipe-grid" style="display:grid; grid-template-columns: 1fr 1.6fr; gap:24px; align-items:start;">
+        <section>
+          <h3>Ingrédients</h3>
+
+          {# On normalise les retours Windows (\r\n) en \n, puis on split #}
+          {% set ing_lines = recipe.ingredients|replace({"\r\n":"\n", "\r":"\n"})|split('\n') %}
+
+          <ul>
+            {% for line in ing_lines %}
+              {% set t = line|trim %}
+              {% if t %}
+                <li>{{ t }}</li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+
+          {% if recipe.tags %}
+            <h4>Mots-clés</h4>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+              {% for t in recipe.tags|split(',') %}
+                {% set tag = t|trim %}
+                {% if tag %}<span class="badge">{{ tag }}</span>{% endif %}
+              {% endfor %}
+            </div>
+          {% endif %}
+        </section>
+
+
+        <section>
+          <h3>Étapes</h3>
+
+          {% set step_lines = recipe.steps|replace({"\r\n":"\n", "\r":"\n"})|split('\n') %}
+
+          <ol class="steps-flat">
+            {% for line in step_lines %}
+              {% set t = line|trim %}
+              {% if t %}
+                <li>{{ t }}</li>
+              {% endif %}
+            {% endfor %}
+          </ol>
+        </section>
+
+        </div>
+
+        {% if recipe_cats is defined and recipe_cats %}
+          <div style="margin-top:10px; display:flex; gap:6px; flex-wrap:wrap;">
+            {% for c in recipe_cats %}
+              <a href="{{ base }}/recipes?cat={{ c.slug }}" class="badge">{{ c.name }}</a>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <p style="margin-top:16px;"><a href="{{ base }}/recipes">⟵ Retour à la liste</a></p>
+      </article>
+    {% else %}
+      <h2>Recette introuvable</h2>
+      <p>La recette demandée n’existe pas ou a été supprimée.</p>
+      <p><a href="{{ base }}/recipes">⟵ Retour à la liste</a></p>
+    {% endif %}
   </div>
 {% endblock %}

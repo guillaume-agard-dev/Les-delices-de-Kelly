@@ -35,6 +35,7 @@ header nav a {
   text-decoration: none;
   padding: 4px 8px;
   border-radius: 8px;
+  font-size: large;
 }
 header nav a:hover {
   background: var(--alt);
@@ -88,8 +89,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
   line-height: 1.05;
   margin: 0 0 8px 0;
   text-shadow:
-    0 2px 8px rgba(0,0,0,.35),  /* halo doux principal */
-    0 1px 0 rgba(0,0,0,.25);     /* léger relief */
+    0 2px 8px rgba(0,0,0,.35);  /* halo doux principal */
 }
 
 /* Sous-titre hero (Libre Franklin) */
@@ -100,6 +100,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
   font-size: 20px; 
   font-weight: 600;
   text-shadow: 0 1px 8px rgba(0,0,0,.25);
+  letter-spacing: 1px;
 }
 
 /* Boutons */
@@ -369,7 +370,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
 }
 
 .nav-logo img {
-  height: 60px;
+  height: 80px;
   width: auto;
   display: block;
 }
@@ -393,7 +394,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
 @media (max-width: 640px) {
   .nav-burger { display:inline-flex; align-items:center; justify-content:center; }
   .nav-left, .nav-right { display: none !important; }    /* on cache les liens desktop */
-  .nav-logo img { height: 44px; }
+  .nav-logo img { height: 50px; }
   .mobile-menu { display: block; } /* ✅ visible en mobile, géré par x-show */
 }
 
@@ -438,4 +439,14 @@ hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
   margin-inline: auto;
   padding-inline: var(--gutter);
   width: 100%;
+}
+
+/* ol sur recette détails */
+.steps-flat{
+  list-style: none;   /* enlève les numéros */
+  padding-left: 0;    /* supprime le retrait par défaut des <ol> */
+  margin: 0;          /* optionnel: enlève marge sup/inf */
+}
+.steps-flat li{
+  margin: 6px 0;      /* petit espacement entre les étapes */
 }

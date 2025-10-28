@@ -10,11 +10,13 @@ final class HomeController
     {
         // Dernière recette (par date de création)
         $featured = DB::query(
-            'SELECT id, title, slug, content, image_path, created_at
-             FROM recipes
-             ORDER BY created_at DESC
-             LIMIT 1'
+            'SELECT id, title, slug, summary, image, diet, created_at
+            FROM recipes
+            WHERE published = 1
+            ORDER BY created_at DESC
+            LIMIT 1'
         )->fetch();
+
 
         // Catégories de la recette (si trouvée)
         $featuredCats = [];

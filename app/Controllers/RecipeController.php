@@ -9,25 +9,28 @@ final class RecipeController
     /** Liste avec recherche + pagination */
     public function index(): void
     {
-        // --- paramètres GET ---
         $q    = isset($_GET['q']) ? trim((string)$_GET['q']) : '';
         $cat  = isset($_GET['cat']) ? trim((string)$_GET['cat']) : '';
-        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-        $page = max(1, $page);
-
+        $diet = isset($_GET['diet']) ? trim((string)$_GET['diet']) : ''; // 'vegan' | 'vegetarien'
+        $page = max(1, (int)($_GET['page'] ?? 1));
         $perPage = 5;
 
-        // --- charger la liste des catégories pour l'UI ---
+        // Catégories pour le <select>
         $cats = DB::query('SELECT id, name, slug FROM categories ORDER BY name')->fetchAll();
 
-        // --- construire WHERE + JOIN selon q/cat ---
-        $whereParts = [];
+        // WHERE/JOIN dynamiques
+        $whereParts = ['recipes.published = 1'];
         $params = [];
         $join = '';
 
         if ($q !== '') {
-            $whereParts[] = '(recipes.title LIKE :q OR recipes.content LIKE :q)';
+            // Recherche sur title + summary + ingredients + tags
+            $whereParts[] = '(recipes.title LIKE :q OR recipes.summary LIKE :q OR recipes.ingredients LIKE :q OR recipes.tags LIKE :q)';
             $params['q'] = '%' . $q . '%';
+        }
+        if ($diet !== '') {
+            $whereParts[] = 'recipes.diet = :diet';
+            $params['diet'] = $diet; // valeurs: 'vegan' | 'vegetarien'
         }
         if ($cat !== '') {
             $join .= ' JOIN recipe_category rc ON rc.recipe_id = recipes.id
@@ -35,13 +38,9 @@ final class RecipeController
             $whereParts[] = 'c.slug = :cat';
             $params['cat'] = $cat;
         }
+        $where = 'WHERE ' . implode(' AND ', $whereParts);
 
-        $where = '';
-        if (!empty($whereParts)) {
-            $where = 'WHERE ' . implode(' AND ', $whereParts);
-        }
-
-        // --- total pour pagination (DISTINCT pour éviter doublons si plusieurs catégories) ---
+        // Total + pagination
         $totalRow = DB::query("SELECT COUNT(DISTINCT recipes.id) AS c
                             FROM recipes
                             {$join}
@@ -51,8 +50,9 @@ final class RecipeController
         if ($page > $pages) { $page = $pages; }
         $offset = ($page - 1) * $perPage;
 
-        // --- liste paginée ---
-        $sql = "SELECT DISTINCT recipes.id, recipes.title, recipes.slug, recipes.image_path, recipes.created_at
+        // Liste paginée (nouvelles colonnes)
+        $sql = "SELECT DISTINCT recipes.id, recipes.title, recipes.slug, recipes.summary,
+                            recipes.image, recipes.diet, recipes.created_at
                 FROM recipes
                 {$join}
                 {$where}
@@ -60,7 +60,7 @@ final class RecipeController
                 LIMIT {$perPage} OFFSET {$offset}";
         $recipes = DB::query($sql, $params)->fetchAll();
 
-        // (Optionnel) récupérer les catégories de chaque recette pour afficher des badges
+        // Catégories par recette (pour badges)
         $catsByRecipe = [];
         if (!empty($recipes)) {
             $ids = array_column($recipes, 'id');
@@ -73,7 +73,6 @@ final class RecipeController
                 ORDER BY c.name",
                 $ids
             )->fetchAll();
-
             foreach ($rows as $row) {
                 $rid = (int)$row['recipe_id'];
                 $catsByRecipe[$rid][] = ['name' => $row['name'], 'slug' => $row['slug']];
@@ -85,8 +84,9 @@ final class RecipeController
             'recipes'      => $recipes,
             'q'            => $q,
             'cat'          => $cat,
-            'cats'         => $cats,          // pour le <select>
-            'catsByRecipe' => $catsByRecipe,  // pour badges
+            'diet'         => $diet,
+            'cats'         => $cats,
+            'catsByRecipe' => $catsByRecipe,
             'page'         => $page,
             'pages'        => $pages,
             'total'        => $total,
@@ -95,14 +95,18 @@ final class RecipeController
     }
 
 
+
     /** Détail d'une recette par slug */
     public function show(string $slug): void
     {
         $recipe = DB::query(
-            'SELECT id, title, slug, content, image_path, created_at
-             FROM recipes
-             WHERE slug = :slug
-             LIMIT 1',
+            'SELECT id, title, slug, summary, diet,
+                    prep_minutes, cook_minutes, servings, difficulty,
+                    ingredients, steps, tags,
+                    image, published, created_at, updated_at
+            FROM recipes
+            WHERE slug = :slug AND published = 1
+            LIMIT 1',
             ['slug' => $slug]
         )->fetch();
 
