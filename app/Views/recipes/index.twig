@@ -4,6 +4,8 @@
   <div class="container">
     <h2>Recettes</h2>
 
+    {% if not limited %}
+
     <form method="get" action="{{ base }}/recipes" style="display:flex; gap:8px; align-items:center; margin:8px 0 16px; flex-wrap: wrap;">
       <input type="search" name="q" value="{{ q }}" placeholder="Rechercher..."
              style="flex:1; min-width: 220px; padding:6px 8px;">
@@ -27,12 +29,21 @@
         <a href="{{ base }}/recipes" style="margin-left:8px;">Effacer</a>
       {% endif %}
     </form>
-
-    {% if total > 0 %}
-      <p style="color:#666;">{{ total }} résultat{% if total > 1 %}s{% endif %} — page {{ page }}/{{ pages }}</p>
     {% else %}
-      <p>Aucun résultat.</p>
+      <p style="margin:8px 0 12px; color:#666;">
+        Vous voyez les <strong>4 dernières recettes publiées</strong>.
+        <a href="{{ base }}/login">Se connecter</a> pour voir toutes les recettes et utiliser les filtres.
+      </p>
     {% endif %}
+
+    {% if limited %}
+      <p style="color:#666;">Dernières recettes (4 max)</p>
+    {% else %}
+      <p style="color:#666;">
+        {{ total }} résultat{% if total > 1 %}s{% endif %} — page {{ page }}/{{ pages }}
+      </p>
+    {% endif %}
+
 
     {% if recipes is not empty %}
       <ul style="list-style:none; padding:0; margin:0;">

@@ -112,4 +112,10 @@ final class Auth
 
         return true;
     }
+
+    public static function id(): ?int
+    {
+        return isset($_SESSION['user']['id']) ? (int)$_SESSION['user']['id'] : null;
+    }
+
 }
