@@ -507,3 +507,63 @@ hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
   cursor: pointer;
 }
 .btn-danger:hover{ filter: brightness(0.98); }
+
+/* Admin recipe-form */
+.admin-recipe-form .grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.admin-recipe-form .col {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.admin-recipe-form .span-2 {
+  grid-column: span 2;
+}
+
+.admin-recipe-form input[type="text"],
+.admin-recipe-form input[type="number"],
+.admin-recipe-form textarea,
+.admin-recipe-form select {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--fg);
+}
+
+.admin-recipe-form textarea {
+  resize: vertical;
+}
+
+.admin-recipe-form .cats {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.admin-recipe-form .cat-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 6px 10px;
+  border-radius: 999px;
+}
+
+.field-error {
+  color: #842029;
+  font-size: 13px;
+}
+
+@media (max-width: 800px) {
+  .admin-recipe-form .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-recipe-form .span-2 {
+    grid-column: auto;
+  }
+}
