@@ -16,6 +16,17 @@ final class AdminCategoryController
         exit;
     }
 
+
+    /** Normalise l’ID venant du router (string "42" ou array ['id'=>42]) */
+    private function paramId($params): int
+    {
+        if (is_array($params)) {
+            return isset($params['id']) ? (int)$params['id'] : 0;
+        }
+        return (int)$params;
+    }
+
+
     private static function slugify(string $name): string {
         $s = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $name);
         $s = preg_replace('~[^\\pL\\d]+~u', '-', $s);
@@ -89,7 +100,7 @@ final class AdminCategoryController
     }
 
     /** POST /admin/categories/{id}/rename */
-    public function rename(array $params): void
+    public function rename($params): void
     {
         Auth::requireAdminOrRedirect();
         if (!Csrf::check($_POST['_csrf'] ?? null)) {
@@ -97,7 +108,7 @@ final class AdminCategoryController
             $this->redirect('/admin/categories');
         }
 
-        $id   = (int)($params['id'] ?? 0);
+        $id = $this->paramId($params);
         $name = trim((string)($_POST['name'] ?? ''));
 
         if ($id <= 0 || mb_strlen($name) < 2) {
@@ -116,7 +127,7 @@ final class AdminCategoryController
     }
 
     /** POST /admin/categories/{id}/delete */
-    public function delete(array $params): void
+    public function delete($params): void
     {
         Auth::requireAdminOrRedirect();
         if (!Csrf::check($_POST['_csrf'] ?? null)) {
@@ -124,11 +135,12 @@ final class AdminCategoryController
             $this->redirect('/admin/categories');
         }
 
-        $id = (int)($params['id'] ?? 0);
+        $id = $this->paramId($params);
         if ($id <= 0) {
             Flash::set('err', 'ID invalide.');
             $this->redirect('/admin/categories');
         }
+
 
         // La FK recipe_category ON DELETE CASCADE supprimera les liaisons
         DB::query('DELETE FROM categories WHERE id = :id', ['id' => $id]);

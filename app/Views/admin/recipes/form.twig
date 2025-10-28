@@ -1,0 +1,124 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+  <div class="container">
+    <h2>{{ mode == 'edit' ? 'Éditer la recette' : 'Nouvelle recette' }}</h2>
+
+    {% if errors.form %}
+      <div class="alert alert-err">{{ errors.form }}</div>
+    {% endif %}
+
+    <form method="post"
+          action="{{ mode == 'edit' ? (base ~ '/admin/recipes/' ~ old.id ~ '/edit') : (base ~ '/admin/recipes/create') }}"
+          class="admin-recipe-form" enctype="multipart/form-data">
+      <input type="hidden" name="_csrf" value="{{ csrf }}">
+
+      <div class="grid">
+        <div class="col">
+          <label>Titre *</label>
+          <input type="text" name="title" required minlength="2" maxlength="120" value="{{ old.title|e }}">
+          {% if errors.title %}<p class="field-error">{{ errors.title }}</p>{% endif %}
+        </div>
+
+        <div class="col">
+          <label>Régime</label>
+          <select name="diet">
+            <option value="">—</option>
+            <option value="vegan" {% if old.diet == 'vegan' %}selected{% endif %}>Vegan</option>
+            <option value="vegetarien" {% if old.diet == 'vegetarien' %}selected{% endif %}>Végétarien</option>
+          </select>
+          {% if errors.diet %}<p class="field-error">{{ errors.diet }}</p>{% endif %}
+        </div>
+
+        <div class="col span-2">
+          <label>Résumé (court) *</label>
+          <textarea name="summary" rows="3" required maxlength="800">{{ old.summary|e }}</textarea>
+          {% if errors.summary %}<p class="field-error">{{ errors.summary }}</p>{% endif %}
+        </div>
+
+        <div class="col">
+          <label>Préparation (min)</label>
+          <input type="number" name="prep_minutes" min="0" value="{{ old.prep_minutes|e }}">
+        </div>
+        <div class="col">
+          <label>Cuisson (min)</label>
+          <input type="number" name="cook_minutes" min="0" value="{{ old.cook_minutes|e }}">
+        </div>
+        <div class="col">
+          <label>Portions</label>
+          <input type="number" name="servings" min="0" value="{{ old.servings|e }}">
+        </div>
+        <div class="col">
+          <label>Difficulté</label>
+          <input type="text" name="difficulty" placeholder="facile / moyen / avancé…" value="{{ old.difficulty|e }}">
+        </div>
+
+        <div class="col span-2">
+          <label>Ingrédients (1 par ligne) *</label>
+          <textarea name="ingredients" rows="6" required>{{ old.ingredients|e }}</textarea>
+          {% if errors.ingredients %}<p class="field-error">{{ errors.ingredients }}</p>{% endif %}
+        </div>
+
+        <div class="col span-2">
+          <label>Étapes (1 par ligne) *</label>
+          <textarea name="steps" rows="8" required>{{ old.steps|e }}</textarea>
+          {% if errors.steps %}<p class="field-error">{{ errors.steps }}</p>{% endif %}
+        </div>
+
+        <div class="col span-2">
+          <label>Tags (séparés par des virgules)</label>
+          <input type="text" name="tags" value="{{ old.tags|e }}">
+        </div>
+
+        {% if mode == 'edit' and old.image %}
+        <div class="col span-2">
+            <label>Image actuelle</label>
+            <img src="{{ base }}/{{ old.image }}" alt="" style="max-width:420px; border:1px solid var(--border); border-radius:12px;">
+            <label style="display:block; margin-top:6px;">
+            <input type="checkbox" name="remove_image" value="1"> Supprimer l’image
+            </label>
+        </div>
+        {% endif %}
+
+        {% if mode == 'edit' %}
+        <div class="col">
+            <label>Slug</label>
+            <input type="text" value="{{ old.slug }}" readonly>
+        </div>
+        {% endif %}
+
+
+        <div class="col span-2">
+        <label>Nouvelle image (JPEG/PNG/WebP, ≤ 5 Mo)</label>
+        <input type="file" name="image" accept="image/jpeg,image/png,image/webp">
+        {% if errors.image %}<p class="field-error">{{ errors.image }}</p>{% endif %}
+        </div>
+
+
+        <div class="col">
+          <label><input type="checkbox" name="published" value="1" {% if old.published == '1' %}checked{% endif %}> Publiée</label>
+        </div>
+
+        <div class="col span-2">
+          <label>Catégories</label>
+          <div class="cats">
+            {% for c in cats %}
+              <label class="cat-item">
+                <input type="checkbox" name="cat_ids[]" value="{{ c.id }}"
+                  {% if c.id in old.cat_ids %}checked{% endif %}>
+                {{ c.name }}
+              </label>
+            {% endfor %}
+          </div>
+          {% if errors.cat_ids %}<p class="field-error">{{ errors.cat_ids }}</p>{% endif %}
+        </div>
+
+      </div>
+
+      <div class="actions" style="margin-top:12px;">
+        <button type="submit" class="btn btn-solid">{{ mode == 'edit' ? 'Enregistrer' : 'Créer' }}</button>
+        <a class="btn" href="{{ base }}/admin/recipes">Annuler</a>
+      </div>
+    </form>
+  </div>
+{% endblock %}
