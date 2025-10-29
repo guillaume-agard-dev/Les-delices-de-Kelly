@@ -1,0 +1,60 @@
+{% extends "layout.twig" %}
+{% block content %}
+  <div class="container">
+    <h2>Politique de confidentialité</h2>
+    <p style="color:#666;">Dernière mise à jour : {{ updated_at }}</p>
+
+    <h3>1. Responsable du traitement</h3>
+    <p>
+      <strong>Guillaume Agard</strong>, éditeur du site.<br>
+      Contact : <a href="mailto:guillaumeagard.dev@gmail.com">guillaumeagard.dev@gmail.com</a>
+    </p>
+
+    <h3>2. Données traitées & finalités</h3>
+    <ul>
+      <li><strong>Compte utilisateur</strong> : nom, email, mot de passe (haché).<br>
+          <em>Finalité</em> : création de compte, authentification, accès membre.</li>
+      <li><strong>Commentaires</strong> : contenu du commentaire, recette liée, auteur (user), date.<br>
+          <em>Finalité</em> : publication d’avis et échanges autour des recettes.</li>
+      <li><strong>Cookies techniques</strong> : identifiant de session, sécurité CSRF (voir page «&nbsp;Cookies&nbsp;»).<br>
+          <em>Finalité</em> : fonctionnement et sécurité du site.</li>
+    </ul>
+
+    <h3>3. Bases légales</h3>
+    <ul>
+      <li><strong>Exécution du contrat</strong> : gestion du compte et accès membre.</li>
+      <li><strong>Intérêt légitime</strong> : modération, sécurité du service, lutte anti-spam.</li>
+      <li><strong>Consentement</strong> : non applicable actuellement (pas d’analytics ni de publicité).</li>
+    </ul>
+
+    <h3>4. Destinataires & transferts</h3>
+    <p>
+      Les données sont traitées par l’éditeur. L’hébergement est réalisé en France (o2switch).
+      Aucun transfert hors UE n’est réalisé à ce jour.
+    </p>
+
+    <h3>5. Durées de conservation</h3>
+    <ul>
+      <li><strong>Comptes</strong> : tant que le compte existe (suppression à la demande).</li>
+      <li><strong>Commentaires</strong> : jusqu’à suppression par l’utilisateur ou modération, et au plus tard <strong>3 ans</strong> après le dernier commentaire.</li>
+      <li><strong>Journaux techniques</strong> (si activés) : entre <strong>6 et 12 mois</strong> pour la sécurité.</li>
+    </ul>
+
+    <h3>6. Sécurité</h3>
+    <p>
+      Mots de passe hachés, protections CSRF, contrôle d’accès (rôle admin), mises à jour régulières.
+    </p>
+
+    <h3>7. Vos droits</h3>
+    <p>
+      Vous disposez des droits d’accès, rectification, effacement, opposition, limitation et portabilité.
+      Pour les exercer : <a href="mailto:guillaumeagard.dev@gmail.com">guillaumeagard.dev@gmail.com</a>.<br>
+      Vous pouvez aussi introduire une réclamation auprès de la CNIL (cnil.fr).
+    </p>
+
+    <h3>8. Cookies</h3>
+    <p>
+      Voir la <a href="{{ base }}/cookies">Politique Cookies</a>.
+    </p>
+  </div>
+{% endblock %}
