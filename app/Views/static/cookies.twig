@@ -1,0 +1,45 @@
+{% extends "layout.twig" %}
+{% block content %}
+  <div class="container">
+    <h2>Politique Cookies</h2>
+    <p style="color:#666;">Dernière mise à jour : {{ updated_at }}</p>
+
+    <h3>1. Principe</h3>
+    <p>
+      Un « cookie » est un petit fichier texte déposé sur votre appareil pour permettre certaines fonctionnalités.
+      Ce site n’utilise que des <strong>cookies techniques</strong>, nécessaires à son bon fonctionnement.
+    </p>
+
+    <h3>2. Cookies utilisés</h3>
+    <table class="admin-table" style="margin-top:8px;">
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Finalité</th>
+          <th>Durée</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>PHPSESSID</code></td>
+          <td>Maintien de la session utilisateur (connexion, navigation sécurisée)</td>
+          <td>Durée de session</td>
+          <td>Essentiel (technique)</td>
+        </tr>
+        {# Ajoute ici tout autre cookie si tu en introduis plus tard (ex. remember_me) #}
+      </tbody>
+    </table>
+
+    <h3>3. Consentement</h3>
+    <p>
+      Aucun cookie non essentiel (analytics, publicité, réseaux sociaux) n’est déposé.
+      Par conséquent, aucun bandeau de consentement n’est nécessaire.
+    </p>
+
+    <h3>4. Paramétrage du navigateur</h3>
+    <p>
+      Vous pouvez à tout moment supprimer ou bloquer les cookies via les réglages de votre navigateur.
+    </p>
+  </div>
+{% endblock %}

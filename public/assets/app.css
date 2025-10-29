@@ -22,6 +22,21 @@ html, body {
   line-height: 1.6;
 }
 
+/* Sticky footer layout */
+html, body { height: 100%; }
+body{
+  min-height: 100vh;      /* fallback */
+  min-height: 100dvh;     /* nouveaux units, iOS/Android récents */
+  min-height: 100svh;     /* iOS Safari */
+  display: flex;
+  flex-direction: column;
+}
+.site-main{ flex: 1 0 auto; }
+
+/* (optionnel) reset marges par défaut du body */
+body{ margin: 0; }
+
+
 /* Titres */
 h1, h2, h3, h4 {
   font-family: "Libre Baskerville", Georgia, "Times New Roman", serif;
@@ -566,4 +581,58 @@ hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
   .admin-recipe-form .span-2 {
     grid-column: auto;
   }
+}
+
+
+/* Footer */
+.footer-grid {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.footer-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.footer-links a {
+  text-decoration: none;
+  color: var(--fg);
+}
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+.footer-contact {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.icon-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--fg);
+  text-decoration: none;
+}
+
+.icon-link:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.icon-link svg {
+  width: 18px;
+  height: 18px;
+  display: block;
 }

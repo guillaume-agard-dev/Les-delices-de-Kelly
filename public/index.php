@@ -92,6 +92,11 @@ $router->post('/admin/recipes/{id}/publish',[App\Controllers\AdminRecipeControll
 // Commentaires
 $router->post('/recipes/{slug}/comments', [App\Controllers\RecipeController::class, 'commentPost']);
 
+// Pages légales / statiques
+$router->get('/mentions-legales',              [App\Controllers\StaticController::class, 'mentions']);
+$router->get('/politique-de-confidentialite',  [App\Controllers\StaticController::class, 'privacy']);
+$router->get('/cookies',                       [App\Controllers\StaticController::class, 'cookies']);
+
 
 
 
