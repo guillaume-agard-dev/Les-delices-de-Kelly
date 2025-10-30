@@ -207,7 +207,7 @@ Options -Indexes
 ## Accessibilité & responsive
 - Structure sémantique (titres, labels).
 - Contrastes et focus visibles.
-- **Menu burger** < 640 px.
+- **Menu burger** < 790 px.
 - **Sticky footer** (mise en page flex : `<main class="site-main">` + CSS).
 
 ---
