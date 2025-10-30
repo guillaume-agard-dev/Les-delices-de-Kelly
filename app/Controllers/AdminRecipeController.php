@@ -113,7 +113,7 @@ final class AdminRecipeController
 
         $slug = self::uniqueSlug(self::slugify($title));
 
-        // insert recette (sans image pour l’instant ; on gérera l’upload à l’étape suivante)
+        // insert recette
         \App\Core\DB::query(
             'INSERT INTO recipes (title, slug, summary, diet, ingredients, steps, tags, image, published, prep_minutes, cook_minutes, servings, difficulty)
             VALUES (:t,:s,:sum,:diet,:ing,:steps,:tags,NULL,:pub,:prep,:cook,:serv,:diff)',

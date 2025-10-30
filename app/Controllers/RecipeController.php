@@ -268,7 +268,7 @@ final class RecipeController
         $this->redirectToRecipe($slug, '#comments');
     }
 
-    // Helpers redirection (mets-les en privé dans le contrôleur)
+    // Helpers redirection
     private function redirectToRecipe(string $slug, string $anchor = ''): void
     {
         $base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/'); if ($base === '/') $base = '';
