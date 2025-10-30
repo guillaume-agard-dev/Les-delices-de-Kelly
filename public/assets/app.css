@@ -396,21 +396,38 @@ hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
   background: var(--surface);
   border-bottom: 1px solid var(--border);
 }
-/* .mobile-menu__inner {
+.mobile-menu__inner {
   max-width: 960px;
   margin: 0 auto;
   padding: 10px 0 14px;
   display: grid;
   gap: 10px;
-} */
+}
 .mobile-menu a { text-decoration: none; }
 
 /* Petits écrans */
-@media (max-width: 640px) {
-  .nav-burger { display:inline-flex; align-items:center; justify-content:center; }
-  .nav-left, .nav-right { display: none !important; }    /* on cache les liens desktop */
-  .nav-logo img { height: 50px; }
-  .mobile-menu { display: block; } /* ✅ visible en mobile, géré par x-show */
+@media (max-width: 790px) {
+  .nav-burger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-left,
+  .nav-right {
+    display: none !important;
+  }
+
+  /* on cache les liens desktop */
+  .nav-logo img {
+    height: 50px;
+  }
+
+  .mobile-menu {
+    display: block;
+  }
+
+  /* ✅ visible en mobile, géré par x-show */
 }
 
 /* Optionnel : petit effet hover */
@@ -636,3 +653,16 @@ hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
   height: 18px;
   display: block;
 }
+
+
+/* Empêche les débordements horizontaux de casser la page */
+html, body { max-width: 100%; overflow-x: hidden; }
+
+/* Box-sizing universel pour éviter les calculs de largeur surprenants */
+*, *::before, *::after { box-sizing: border-box; }
+
+/* Media responsives */
+img, svg, video, canvas { max-width: 100%; height: auto; display: block; }
+
+/* Éviter qu’un mot/URL trop long ne déborde */
+p, li, h1, h2, h3, h4 { overflow-wrap: anywhere; word-break: break-word; }
